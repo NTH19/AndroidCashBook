@@ -32,6 +32,7 @@ object DBManager {
             val typeBean = TypeBean(id, typename, imageId, sImageId, kind)
             list.add(typeBean)
         }
+        cursor.close()
         return list
     }
 }

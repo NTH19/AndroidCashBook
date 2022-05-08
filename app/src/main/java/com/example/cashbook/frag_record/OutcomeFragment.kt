@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.example.cashbook.R
 import com.example.cashbook.db.DBManager
 import com.example.cashbook.db.TypeBean
@@ -31,6 +28,7 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
     lateinit var typeTv: TextView
     lateinit var typeGv: GridView
     lateinit var typeList:MutableList<TypeBean>
+    lateinit var adapter:TypeBaseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,13 +41,24 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
         // Inflate the layout for this fragment
         var view=inflater.inflate(R.layout.fragment_outcome, container, false)
         initView(view)
-       // loadDataToGV()
+        loadDataToGV()
+        typeGv.setOnItemClickListener(object :AdapterView.OnItemClickListener{
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                adapter.selPos=p2
+                adapter.notifyDataSetInvalidated()
+                var bean=typeList.get(p2)
+                var name=bean.typename
+                typeTv.setText(name)
+                var sid=bean.sImageId
+                typeIv.setImageResource(sid)
+            }
+        })
         return view
     }
 
     private fun loadDataToGV() {
         typeList= ArrayList()
-        var adapter=context?.let { TypeBaseAdapter(it,typeList) }
+        adapter= TypeBaseAdapter(context!!,typeList)
         typeGv.adapter=adapter
         var outlist=DBManager.getTypeList(0)
         typeList.addAll(outlist)
