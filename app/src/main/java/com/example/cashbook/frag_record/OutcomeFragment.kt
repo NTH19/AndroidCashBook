@@ -20,15 +20,9 @@ import com.example.cashbook.utils.KeyBoardUtils
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OutcomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class OutcomeFragment : androidx.fragment.app.Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     lateinit var keyboardView: KeyboardView
     lateinit var moneyEdit: EditText
     lateinit var typeIv:ImageView
@@ -40,10 +34,6 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -51,9 +41,10 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        view?.let { initView(it) }
-        loadDataToGV()
-        return inflater.inflate(R.layout.fragment_outcome, container, false)
+        var view=inflater.inflate(R.layout.fragment_outcome, container, false)
+        initView(view)
+       // loadDataToGV()
+        return view
     }
 
     private fun loadDataToGV() {
@@ -82,25 +73,5 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
             }
         })
 
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OutcomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OutcomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

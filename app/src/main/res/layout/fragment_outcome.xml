@@ -46,7 +46,7 @@
         android:layout_below="@id/frag_record_r1_top"
         android:background="@color/grey"
         />
-    <GridLayout
+    <GridView
         android:id="@+id/frag_record_gv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
