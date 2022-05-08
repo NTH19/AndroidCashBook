@@ -1,5 +1,6 @@
 package com.example.cashbook.frag_record
 
+import android.content.Context
 import android.inputmethodservice.KeyboardView
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.cashbook.R
+import com.example.cashbook.db.DBManager
+import com.example.cashbook.db.TypeBean
 import com.example.cashbook.utils.KeyBoardUtils
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,6 +36,7 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
     lateinit var remarks: TextView
     lateinit var typeTv: TextView
     lateinit var typeGv: GridView
+    lateinit var typeList:MutableList<TypeBean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +51,18 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        initView()
+        view?.let { initView(it) }
+        loadDataToGV()
         return inflater.inflate(R.layout.fragment_outcome, container, false)
+    }
+
+    private fun loadDataToGV() {
+        typeList= ArrayList()
+        var adapter=context?.let { TypeBaseAdapter(it,typeList) }
+        typeGv.adapter=adapter
+        var outlist=DBManager.getTypeList(0)
+        typeList.addAll(outlist)
+        adapter?.notifyDataSetChanged()
     }
 
     private fun initView( view: View) {
@@ -59,7 +73,7 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
         remarks=view.findViewById(R.id.frag_record_tv_beizhu)
         timeTv=view.findViewById(R.id.frag_record_tv_tiime)
         typeTv=view.findViewById(R.id.frag_record_tv)
-        var boardUtils=KeyBoardUtils(keyboardView,,moneyEdit)
+        var boardUtils=KeyBoardUtils(keyboardView,moneyEdit)
         boardUtils.showKeyboard()
 
         boardUtils.SetOnEnsureListener(object :KeyBoardUtils.OnEnsureListener{
