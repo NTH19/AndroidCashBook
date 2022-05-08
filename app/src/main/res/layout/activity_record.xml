@@ -10,28 +10,28 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:minHeight="50dp">
+        android:layout_height="50dp">
+
         <ImageView
             android:id="@+id/record_iv_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/ih_error"
-            android:onClick="onClick"
             android:layout_marginLeft="10dp"
-            />
+            android:onClick="onClick"
+            android:src="@mipmap/ih_error" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/record_tabs"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             app:tabGravity="center"
-            app:tabMode="fixed"
-            app:tabTextColor="@color/grey"
-            app:tabSelectedTextColor="@color/black"
             app:tabIndicatorColor="@color/black"
-            />
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="@color/grey" />
     </RelativeLayout>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/record_vp"
         android:layout_width="match_parent"

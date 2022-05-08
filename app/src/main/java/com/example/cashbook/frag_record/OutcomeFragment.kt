@@ -1,10 +1,16 @@
 package com.example.cashbook.frag_record
 
+import android.inputmethodservice.KeyboardView
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.GridView
+import android.widget.ImageView
+import android.widget.TextView
 import com.example.cashbook.R
+import com.example.cashbook.utils.KeyBoardUtils
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +26,13 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    lateinit var keyboardView: KeyboardView
+    lateinit var moneyEdit: EditText
+    lateinit var typeIv:ImageView
+    lateinit var timeTv: TextView
+    lateinit var remarks: TextView
+    lateinit var typeTv: TextView
+    lateinit var typeGv: GridView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +47,27 @@ class OutcomeFragment : androidx.fragment.app.Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        initView()
         return inflater.inflate(R.layout.fragment_outcome, container, false)
+    }
+
+    private fun initView( view: View) {
+        keyboardView=view.findViewById(R.id.frag_record_keyboard)
+        moneyEdit=view.findViewById(R.id.frag_record_et_money)
+        typeIv=view.findViewById(R.id.frag_record_iv)
+        typeGv=view.findViewById(R.id.frag_record_gv)
+        remarks=view.findViewById(R.id.frag_record_tv_beizhu)
+        timeTv=view.findViewById(R.id.frag_record_tv_tiime)
+        typeTv=view.findViewById(R.id.frag_record_tv)
+        var boardUtils=KeyBoardUtils(keyboardView,,moneyEdit)
+        boardUtils.showKeyboard()
+
+        boardUtils.SetOnEnsureListener(object :KeyBoardUtils.OnEnsureListener{
+            override fun onEnsure() {
+                TODO("Not yet implemented")
+            }
+        })
+
     }
 
     companion object {
