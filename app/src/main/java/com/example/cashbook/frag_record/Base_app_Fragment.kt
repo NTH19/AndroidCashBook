@@ -19,7 +19,7 @@ import kotlin.collections.ArrayList
 
 
 
-open class Base_app_Fragment : androidx.fragment.app.Fragment() {
+open abstract class Base_app_Fragment : androidx.fragment.app.Fragment() {
 
     lateinit var keyboardView: KeyboardView
     lateinit var moneyEdit: EditText
@@ -75,13 +75,11 @@ open class Base_app_Fragment : androidx.fragment.app.Fragment() {
         accountBean.day=calendar.get(Calendar.DAY_OF_MONTH)
 
     }
-    private fun loadDataToGV() {
+    open fun loadDataToGV() {
         typeList= ArrayList()
         adapter= TypeBaseAdapter(requireContext(),typeList)
         typeGv.adapter=adapter
-        var outlist=DBManager.getTypeList(0)
-        typeList.addAll(outlist)
-        adapter?.notifyDataSetChanged()
+
     }
 
     private fun initView( view: View) {
@@ -103,9 +101,13 @@ open class Base_app_Fragment : androidx.fragment.app.Fragment() {
                     return
                 }
                 accountBean.price=monoeyStr.toDouble()
+
+                saveAccountToDb()
                 activity?.finish()
             }
         })
 
     }
+
+     open abstract fun saveAccountToDb()
 }

@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     fun onClick(view: View) {
         when(view.id){
             R.id.main_btn_edit->{
-                var it1=Intent()
+                val it1=Intent()
                 it1.setClass(this,RecordActivity::class.java)
                 startActivity(it1)
             }
