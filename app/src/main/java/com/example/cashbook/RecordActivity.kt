@@ -19,15 +19,15 @@ class RecordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
-        //1.查找控件
         this.tabLayout = findViewById(R.id.record_tabs)
         this.viewPager = findViewById(R.id.record_vp)
         initPager();
+
     }
     private fun initPager() {
-//        初始化ViewPager页面的集合
+
         val fragmentList: MutableList<Fragment> = ArrayList()
-        //        创建收入和支出页面，放置在Fragment当中
+
         val outFrag = OutcomeFragment()//支出
         val inFrag = IncomeFragment() //收入
         fragmentList.add(outFrag)

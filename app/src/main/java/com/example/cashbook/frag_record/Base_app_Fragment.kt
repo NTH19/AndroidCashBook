@@ -15,6 +15,7 @@ import com.example.cashbook.db.DBManager
 import com.example.cashbook.db.TypeBean
 import com.example.cashbook.utils.KeyBoardUtils
 import com.example.cashbook.utils.RemarkDialog
+import com.example.cashbook.utils.SelectTimeDialog
 import java.lang.Error
 import java.text.SimpleDateFormat
 import java.util.*
@@ -135,13 +136,30 @@ open abstract class Base_app_Fragment : androidx.fragment.app.Fragment(),View.On
                  }
              }
          }
-
      }
+    fun showTimeDialog(){
+        var selectTimeDialog= context?.let { SelectTimeDialog(it) }
+        selectTimeDialog?.show()
+        if (selectTimeDialog != null) {
+            selectTimeDialog.setOnEnsureListener(object :SelectTimeDialog.OnEnsureListener{
+                override fun onEnsure(time: String?, year: Int, month: Int, day: Int) {
+                    timeTv.setText(time)
+                    if (time != null) {
+                        accountBean.time= time
+                    }
+                    accountBean.year=year
+                    accountBean.month=month
+                    accountBean.day=day
+                }
+
+            })
+        }
+    }
 
      override fun onClick(v:View){
         when(v.id){
             R.id.frag_record_tv_tiime->{
-
+                showTimeDialog()
             }
             R.id.frag_record_tv_beizhu->{
                 ShowRemarkDialog()

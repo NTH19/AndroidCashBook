@@ -39,7 +39,7 @@
         android:divider="@null"
         android:dividerHeight="6dp"
         android:scrollbars="none"
-        android:background="@color/black"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
