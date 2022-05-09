@@ -16,6 +16,19 @@ object DBManager {
         db = helper.getWritableDatabase()
     }
 
+    fun insertItemToAccounttb(bean: AccountBean) {
+        val values = ContentValues()
+        values.put("typename", bean.typename)
+        values.put("sImageId", bean.slimg)
+        values.put("beizhu", bean.remark)
+        values.put("money", bean.price)
+        values.put("time", bean.time)
+        values.put("year", bean.year)
+        values.put("month", bean.month)
+        values.put("day", bean.day)
+        values.put("kind", bean.kind)
+        db?.insert("accounttb", null, values)
+    }
     @SuppressLint("Range")
     fun getTypeList(kind: Int): MutableList<TypeBean> {
         val list: MutableList<TypeBean> = ArrayList()

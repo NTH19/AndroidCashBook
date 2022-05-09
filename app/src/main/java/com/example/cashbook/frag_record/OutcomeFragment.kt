@@ -15,7 +15,8 @@ class OutcomeFragment: Base_app_Fragment() {
     }
 
     override fun saveAccountToDb() {
-        TODO("Not yet implemented")
+        accountBean.kind=0
+        DBManager.insertItemToAccounttb(accountBean)
     }
 }
 

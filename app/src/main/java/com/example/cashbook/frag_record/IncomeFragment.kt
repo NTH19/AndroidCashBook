@@ -19,6 +19,7 @@ class IncomeFragment :Base_app_Fragment() {
     }
 
     override fun saveAccountToDb() {
-        TODO("Not yet implemented")
+        accountBean.kind=1
+        DBManager.insertItemToAccounttb(accountBean)
     }
 }

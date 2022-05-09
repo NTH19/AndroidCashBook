@@ -1,5 +1,6 @@
 package com.example.cashbook.db
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -20,6 +21,7 @@ class DBOpen(context: Context?) :
                     "time varchar(60),year integer,month integer,day integer,kind integer)"
         db.execSQL(sql)
     }
+
 
     private fun insertType(db: SQLiteDatabase) {
 //      向typetb表当中插入元素

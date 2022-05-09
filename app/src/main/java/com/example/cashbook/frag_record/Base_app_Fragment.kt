@@ -4,6 +4,7 @@ import android.content.Context
 import android.inputmethodservice.KeyboardView
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.LogPrinter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +14,17 @@ import com.example.cashbook.db.AccountBean
 import com.example.cashbook.db.DBManager
 import com.example.cashbook.db.TypeBean
 import com.example.cashbook.utils.KeyBoardUtils
+import com.example.cashbook.utils.RemarkDialog
+import java.lang.Error
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.logging.Level
+import java.util.logging.Logger
 import kotlin.collections.ArrayList
 
 
 
-open abstract class Base_app_Fragment : androidx.fragment.app.Fragment() {
+open abstract class Base_app_Fragment : androidx.fragment.app.Fragment(),View.OnClickListener {
 
     lateinit var keyboardView: KeyboardView
     lateinit var moneyEdit: EditText
@@ -90,6 +95,10 @@ open abstract class Base_app_Fragment : androidx.fragment.app.Fragment() {
         remarks=view.findViewById(R.id.frag_record_tv_beizhu)
         timeTv=view.findViewById(R.id.frag_record_tv_tiime)
         typeTv=view.findViewById(R.id.frag_record_tv)
+
+        timeTv.setOnClickListener(this)
+        remarks.setOnClickListener(this)
+
         var boardUtils=KeyBoardUtils(keyboardView,moneyEdit)
         boardUtils.showKeyboard()
 
@@ -110,4 +119,33 @@ open abstract class Base_app_Fragment : androidx.fragment.app.Fragment() {
     }
 
      open abstract fun saveAccountToDb()
+     fun ShowRemarkDialog(){
+         var remarkDialog= context?.let { RemarkDialog(it) }
+         remarkDialog?.show()
+         remarkDialog?.setDialogSize()
+         remarkDialog?.ensureListener=object : RemarkDialog.onEnsureListener{
+             override fun ensure() {
+                 var msg= remarkDialog?.et?.text.toString().trim()
+                 if(!TextUtils.isEmpty(msg)){
+                     remarks.setText(msg)
+                     accountBean.remark=msg
+                 }
+                 if (remarkDialog != null) {
+                     remarkDialog.cancel()
+                 }
+             }
+         }
+
+     }
+
+     override fun onClick(v:View){
+        when(v.id){
+            R.id.frag_record_tv_tiime->{
+
+            }
+            R.id.frag_record_tv_beizhu->{
+                ShowRemarkDialog()
+            }
+        }
+     }
 }
