@@ -9,4 +9,5 @@
     <string name="cancel">取消</string>
     <string name="ensure">确定</string>
     <string name="add_remark">添加备注</string>
+    <string name="please_input_time">请输入时间</string>
 </resources>
