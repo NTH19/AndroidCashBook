@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
                 it1.setClass(this,RecordActivity::class.java)
                 startActivity(it1)
             }
-
         }
     }
 }
