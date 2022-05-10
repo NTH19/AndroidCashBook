@@ -1,11 +1,10 @@
 package com.example.cashbook.db
 
 import android.annotation.SuppressLint
-import com.example.cashbook.db.DBOpen
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.example.cashbook.db.TypeBean
+import android.util.Log
 
 
 object DBManager {
@@ -29,6 +28,7 @@ object DBManager {
         values.put("kind", bean.kind)
         db?.insert("accounttb", null, values)
     }
+
     @SuppressLint("Range")
     fun getTypeList(kind: Int): MutableList<TypeBean> {
         val list: MutableList<TypeBean> = ArrayList()
@@ -44,6 +44,31 @@ object DBManager {
             val id = cursor.getInt(cursor.getColumnIndex("id"))
             val typeBean = TypeBean(id, typename, imageId, sImageId, kind)
             list.add(typeBean)
+        }
+        cursor.close()
+        return list
+    }
+    @SuppressLint("Range")
+    fun getAccountListOneDayFromAccounttb(year: Int, month: Int, day: Int): MutableList<AccountBean>? {
+        val list: MutableList<AccountBean> = ArrayList()
+        val sql = "select * from accounttb where year=? and month=? and day=? order by id desc"
+        val cursor = db!!.rawQuery(
+            sql,
+            arrayOf(year.toString() + "", month.toString() + "", day.toString() + "")
+        )
+        while (cursor.moveToNext()) {
+            val id: Int = cursor.getInt(cursor.getColumnIndex("id"))
+            val typename: String = cursor.getString(cursor.getColumnIndex("typename"))
+            val beizhu: String = cursor.getString(cursor.getColumnIndex("beizhu"))
+            val time: String = cursor.getString(cursor.getColumnIndex("time"))
+            val sImageId: Int = cursor.getInt(cursor.getColumnIndex("sImageId"))
+            val kind: Int = cursor.getInt(cursor.getColumnIndex("kind"))
+            val money: Float = cursor.getFloat(cursor.getColumnIndex("money"))
+            val accountBean = AccountBean(
+                id, typename, sImageId, beizhu,
+                money.toDouble(), time, year, month, day, kind
+            )
+            list.add(accountBean)
         }
         cursor.close()
         return list

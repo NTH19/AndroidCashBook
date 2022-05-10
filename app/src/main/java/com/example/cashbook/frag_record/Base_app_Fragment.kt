@@ -4,6 +4,7 @@ import android.content.Context
 import android.inputmethodservice.KeyboardView
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.util.LogPrinter
 import android.view.LayoutInflater
 import android.view.View
@@ -102,7 +103,6 @@ open abstract class Base_app_Fragment : androidx.fragment.app.Fragment(),View.On
 
         var boardUtils=KeyBoardUtils(keyboardView,moneyEdit)
         boardUtils.showKeyboard()
-
         boardUtils.SetOnEnsureListener(object :KeyBoardUtils.OnEnsureListener{
             override fun onEnsure() {
                 var monoeyStr=moneyEdit.text.toString()

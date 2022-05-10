@@ -16,10 +16,10 @@ class DBOpen(context: Context?) :
         db.execSQL(sql)
         insertType(db)
         //创建记账表
-        sql =
+        var s =
             "create table accounttb(id integer primary key autoincrement,typename varchar(10),sImageId integer,beizhu varchar(80),money float," +
                     "time varchar(60),year integer,month integer,day integer,kind integer)"
-        db.execSQL(sql)
+        db.execSQL(s)
     }
 
 
