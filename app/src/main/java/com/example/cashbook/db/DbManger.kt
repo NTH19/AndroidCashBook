@@ -113,6 +113,34 @@ object DBManager {
         }
         return total
     }
+    fun deleteItemFromAccounttbById(id: Int): Int {
+        return db!!.delete("accounttb", "id=?", arrayOf(id.toString() + ""))
+    }
+    @SuppressLint("Range")
+    fun getAccountListByRemarkFromAccounttb(beizhu: String): List<AccountBean>? {
+        val list: MutableList<AccountBean> = ArrayList()
+        val sql = "select * from accounttb where beizhu like '%$beizhu%'"
+        val cursor = db!!.rawQuery(sql, null)
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndex("id"))
+            val typename = cursor.getString(cursor.getColumnIndex("typename"))
+            val bz = cursor.getString(cursor.getColumnIndex("beizhu"))
+            val time = cursor.getString(cursor.getColumnIndex("time"))
+            val sImageId = cursor.getInt(cursor.getColumnIndex("sImageId"))
+            val kind = cursor.getInt(cursor.getColumnIndex("kind"))
+            val money = cursor.getFloat(cursor.getColumnIndex("money"))
+            val year = cursor.getInt(cursor.getColumnIndex("year"))
+            val month = cursor.getInt(cursor.getColumnIndex("month"))
+            val day = cursor.getInt(cursor.getColumnIndex("day"))
+            val accountBean = AccountBean(
+                id, typename, sImageId, bz,
+                money.toDouble(), time, year, month, day, kind
+            )
+            list.add(accountBean)
+        }
+        return list
+    }
+
     @SuppressLint("Range")
     fun getAccountListOneDayFromAccounttb(year: Int, month: Int, day: Int): MutableList<AccountBean>? {
         val list: MutableList<AccountBean> = ArrayList()

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.*
 import android.widget.AdapterView.OnItemLongClickListener
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cashbook.adapter.AccountAdapter
 import com.example.cashbook.db.AccountBean
@@ -20,6 +21,8 @@ import com.example.cashbook.db.DBManager.getAccountListOneDayFromAccounttb
 import com.example.cashbook.db.DBManager.getSumMoneyOneDay
 import com.example.cashbook.db.DBManager.getSumMoneyOneMonth
 import com.example.cashbook.utils.BudgetDialog
+import com.example.cashbook.utils.MoreDialog
+import com.example.cashbook.utils.SearchActivity
 import java.util.*
 
 
@@ -78,7 +81,7 @@ class MainActivity : AppCompatActivity() , OnClickListener{
             }
     }
     private fun showDeleteItemDialog(clickBean: AccountBean) {
-        val builder: AlertDialog.Builder = Builder(this)
+        val builder = AlertDialog.Builder(this)
         builder.setTitle("提示信息").setMessage("您确定要删除这条记录么？")
             .setNegativeButton("取消", null)
             .setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
@@ -147,6 +150,11 @@ class MainActivity : AppCompatActivity() , OnClickListener{
 
     override fun onClick(v: View) {
         when (v.id) {
+            R.id.main_iv_search-> {
+                var it =  Intent(this, SearchActivity::class.java)
+                startActivity(it);
+            }
+
             R.id.main_btn_edit->{
                 val it1=Intent()
                 it1.setClass(this,RecordActivity::class.java)
@@ -156,6 +164,9 @@ class MainActivity : AppCompatActivity() , OnClickListener{
 
             }
             R.id.main_btn_more -> {
+                val moreDialog = MoreDialog(this)
+                moreDialog.show()
+                moreDialog.setDialogSize()
             }
             R.id.item_mainlv_top_tv_buget-> showBudgetDialog()
 

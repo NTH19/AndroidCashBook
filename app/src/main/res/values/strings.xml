@@ -11,4 +11,10 @@
     <string name="add_remark">添加备注</string>
     <string name="please_input_time">请输入时间</string>
     <string name="set_budget">设置预算</string>
+    <string name="please_search_info">搜索</string>
+    <string name="setting">设置</string>
+    <string name="date_empty">日期为空</string>
+    <string name="history_record">历史记录</string>
+    <string name="account_info">账单记录</string>
+    <string name="about">关于</string>
 </resources>
