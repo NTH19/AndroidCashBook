@@ -9,7 +9,9 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import com.example.cashbook.AboutActivity
 import com.example.cashbook.R
+
 
 class MoreDialog(context: Context) : Dialog(context),
     View.OnClickListener {
@@ -37,7 +39,8 @@ class MoreDialog(context: Context) : Dialog(context),
         val intent = Intent()
         when (v.id) {
             R.id.dialog_more_btn_about -> {
-
+                intent.setClass(context, AboutActivity::class.java)
+                context.startActivity(intent)
             }
             R.id.dialog_more_btn_setting -> {
 

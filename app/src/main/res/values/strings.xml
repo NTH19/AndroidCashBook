@@ -17,4 +17,19 @@
     <string name="history_record">历史记录</string>
     <string name="account_info">账单记录</string>
     <string name="about">关于</string>
+    <string name="about_appinfo">应用信息</string>
+    <string name="about_version">版本</string>
+    <string name="about_1">1.0</string>
+    <string name="about_app">关于应用</string>
+    <string name="about_balabala">.......</string>
+    <string name="about_developer">开发者</string>
+    <string name="about_me">关于我</string>
+    <string name="about_loc">Nth19</string>
+    <string name="about_email">发送邮箱</string>
+    <string name="about_email2">我的邮箱是:3310288189@qq.com,有问题可以找我！</string>
+    <string name="about_code">源代码</string>
+    <string name="about_codeinfo">我的代码托管在github adress github/NTH19/CashBook</string>
+    <string name="about_Blog">........</string>
+    <string name="about_Blog22">......</string>
+
 </resources>
