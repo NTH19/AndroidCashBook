@@ -3,8 +3,8 @@ package com.example.cashbook.db
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.util.Log
 
 
 object DBManager {
@@ -47,6 +47,71 @@ object DBManager {
         }
         cursor.close()
         return list
+    }
+    @SuppressLint("Range")
+    fun getSumMoneyOneMonth(year: Int, month: Int, kind: Int): Float {
+        var total = 0.0f
+        val sql = "select sum(money) from accounttb where year=? and month=? and kind=?"
+        val cursor = db!!.rawQuery(
+            sql,
+            arrayOf(year.toString() + "", month.toString() + "", kind.toString() + "")
+        )
+        // 遍历
+        if (cursor.moveToFirst()) {
+            val money = cursor.getFloat(cursor.getColumnIndex("sum(money)"))
+            total = money
+        }
+        return total
+    }
+
+    /** 统计某月份支出或者收入情况有多少条  收入-1   支出-0 */
+    @SuppressLint("Range")
+    fun getCountItemOneMonth(year: Int, month: Int, kind: Int): Int {
+        var total = 0
+        val sql = "select count(money) from accounttb where year=? and month=? and kind=?"
+        val cursor = db!!.rawQuery(
+            sql,
+            arrayOf(year.toString() + "", month.toString() + "", kind.toString() + "")
+        )
+        if (cursor.moveToFirst()) {
+            val count = cursor.getInt(cursor.getColumnIndex("count(money)"))
+            total = count
+        }
+        return total
+    }
+
+    /**
+     * 获取某一年的支出或者收入的总金额   kind：支出==0    收入===1
+     */
+    fun getSumMoneyOneYear(year: Int, kind: Int): Float {
+        var total = 0.0f
+        val sql = "select sum(money) from accounttb where year=? and kind=?"
+        val cursor = db!!.rawQuery(sql, arrayOf(year.toString() + "", kind.toString() + ""))
+        // 遍历
+        if (cursor.moveToFirst()) {
+            val money = cursor.getFloat(cursor.getColumnIndex("sum(money)"))
+            total = money
+        }
+        return total
+    }
+    @SuppressLint("Range")
+    fun getSumMoneyOneDay(year: Int, month: Int, day: Int, kind: Int): Float {
+        var total = 0.0f
+        val sql = "select sum(money) from accounttb where year=? and month=? and day=? and kind=?"
+        val cursor: Cursor = db!!.rawQuery(
+            sql,
+            arrayOf(
+                year.toString() + "",
+                month.toString() + "",
+                day.toString() + "",
+                kind.toString() + ""
+            )
+        )
+        if (cursor.moveToFirst()) {
+            val money: Float = cursor.getFloat(cursor.getColumnIndex("sum(money)"))
+            total = money
+        }
+        return total
     }
     @SuppressLint("Range")
     fun getAccountListOneDayFromAccounttb(year: Int, month: Int, day: Int): MutableList<AccountBean>? {

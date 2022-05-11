@@ -10,4 +10,5 @@
     <string name="ensure">确定</string>
     <string name="add_remark">添加备注</string>
     <string name="please_input_time">请输入时间</string>
+    <string name="set_budget">设置预算</string>
 </resources>
