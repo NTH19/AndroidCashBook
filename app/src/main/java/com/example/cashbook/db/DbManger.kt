@@ -142,6 +142,30 @@ object DBManager {
     }
 
     @SuppressLint("Range")
+    fun getAccountListOneMonthFromAccounttb(year: Int, month: Int): List<AccountBean>? {
+        val list: MutableList<AccountBean> = ArrayList()
+        val sql = "select * from accounttb where year=? and month=? order by id desc"
+        val cursor = db!!.rawQuery(sql, arrayOf(year.toString() + "", month.toString() + ""))
+        //遍历符合要求的每一行数据
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndex("id"))
+            val typename = cursor.getString(cursor.getColumnIndex("typename"))
+            val beizhu = cursor.getString(cursor.getColumnIndex("beizhu"))
+            val time = cursor.getString(cursor.getColumnIndex("time"))
+            val sImageId = cursor.getInt(cursor.getColumnIndex("sImageId"))
+            val kind = cursor.getInt(cursor.getColumnIndex("kind"))
+            val money = cursor.getFloat(cursor.getColumnIndex("money"))
+            val day = cursor.getInt(cursor.getColumnIndex("day"))
+            val accountBean = AccountBean(
+                id, typename, sImageId, beizhu,
+                money.toDouble(), time, year, month, day, kind
+            )
+            list.add(accountBean)
+        }
+        return list
+    }
+
+    @SuppressLint("Range")
     fun getAccountListOneDayFromAccounttb(year: Int, month: Int, day: Int): MutableList<AccountBean>? {
         val list: MutableList<AccountBean> = ArrayList()
         val sql = "select * from accounttb where year=? and month=? and day=? order by id desc"
@@ -164,6 +188,22 @@ object DBManager {
             list.add(accountBean)
         }
         cursor.close()
+        return list
+    }
+    fun deleteAllAccount() {
+        val sql = "delete from accounttb"
+        db!!.execSQL(sql)
+    }
+
+    @SuppressLint("Range")
+    fun getYearListFromAccounttb(): List<Int>? {
+        val list: MutableList<Int> = ArrayList()
+        val sql = "select distinct(year) from accounttb order by year asc"
+        val cursor = db!!.rawQuery(sql, null)
+        while (cursor.moveToNext()) {
+            val year = cursor.getInt(cursor.getColumnIndex("year"))
+            list.add(year)
+        }
         return list
     }
 }

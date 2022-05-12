@@ -10,7 +10,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.example.cashbook.AboutActivity
+import com.example.cashbook.HistoryActivity
 import com.example.cashbook.R
+import com.example.cashbook.SettingActivity
 
 
 class MoreDialog(context: Context) : Dialog(context),
@@ -43,10 +45,12 @@ class MoreDialog(context: Context) : Dialog(context),
                 context.startActivity(intent)
             }
             R.id.dialog_more_btn_setting -> {
-
+                intent.setClass(context, SettingActivity::class.java);
+                context.startActivity(intent);
             }
             R.id.dialog_more_btn_record -> {
-
+                intent.setClass(context, HistoryActivity::class.java);
+                context.startActivity(intent);
             }
             R.id.dialog_more_btn_info -> {
 
