@@ -14,7 +14,6 @@ import com.example.cashbook.db.DBManager
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 
 
@@ -70,7 +69,7 @@ abstract class BaseChartFragment : Fragment() {
         xAxis.labelCount = 31
         xAxis.textSize = 12f
 
-        xAxis.setValueFormatter(object :IAxisValueFormatter{
+        xAxis.setValueFormatter(object :ValueFormatter(){
             override fun getFormattedValue(value: Float, axis: AxisBase?): String {
                 var v=value.toInt()
                 if(v==0) return month.toString()+"-1"
@@ -82,7 +81,7 @@ abstract class BaseChartFragment : Fragment() {
                 }else if(month==4||month==6||month==9||month==11)return month.toString()+"-30"
                 return ""
             }
-        } as ValueFormatter?)
+        } )
         xAxis.yOffset = 10f
         setYAxis(year, month)
     }

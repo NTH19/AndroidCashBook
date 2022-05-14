@@ -8,7 +8,6 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ViewPortHandler
@@ -48,7 +47,7 @@ class OutcomChartFragment : BaseChartFragment() {
             barDataSet1.valueTextSize = 8f
             barDataSet1.color = Color.RED
 
-            barDataSet1.setValueFormatter(object :IValueFormatter {
+            barDataSet1.setValueFormatter(object :ValueFormatter() {
                 override fun getFormattedValue(
                     value: Float,
                     entry: Entry?,
@@ -58,7 +57,7 @@ class OutcomChartFragment : BaseChartFragment() {
                     if(value==0f)return ""
                     return value.toString()
                 }
-            } as ValueFormatter)
+            })
             sets.add(barDataSet1)
             val barData = BarData(sets)
             barData.barWidth = 0.2f

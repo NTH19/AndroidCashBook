@@ -30,7 +30,7 @@ class ChartItemAdapter(var context: Context, mDatas: List<ChartItemBean>) :
         return position.toLong()
     }
 
-    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         var convertView = convertView
         var holder: ViewHolder? = null
         if (convertView == null) {
@@ -41,7 +41,7 @@ class ChartItemAdapter(var context: Context, mDatas: List<ChartItemBean>) :
             holder = convertView.tag as ViewHolder
         }
         val bean: ChartItemBean = mDatas[position]
-        holder.iv.setImageResource(bean.sImageId)s
+        holder.iv.setImageResource(bean.sImageId)
         holder.typeTv.setText(bean.type)
         val ratio: Float = bean.ratio
         val pert: String = FloatUtils.ratioToPercent(ratio)
