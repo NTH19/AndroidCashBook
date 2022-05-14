@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import com.example.cashbook.utils.FloatUtils.div
 
 
 object DBManager {
@@ -64,7 +65,6 @@ object DBManager {
         return total
     }
 
-    /** 统计某月份支出或者收入情况有多少条  收入-1   支出-0 */
     @SuppressLint("Range")
     fun getCountItemOneMonth(year: Int, month: Int, kind: Int): Int {
         var total = 0
@@ -80,9 +80,8 @@ object DBManager {
         return total
     }
 
-    /**
-     * 获取某一年的支出或者收入的总金额   kind：支出==0    收入===1
-     */
+
+    @SuppressLint("Range")
     fun getSumMoneyOneYear(year: Int, kind: Int): Float {
         var total = 0.0f
         val sql = "select sum(money) from accounttb where year=? and kind=?"
@@ -203,6 +202,56 @@ object DBManager {
         while (cursor.moveToNext()) {
             val year = cursor.getInt(cursor.getColumnIndex("year"))
             list.add(year)
+        }
+        return list
+    }
+    @SuppressLint("Range")
+    fun getChartListFromAccounttb(year: Int, month: Int, kind: Int): List<ChartItemBean>? {
+        val list: MutableList<ChartItemBean> = ArrayList()
+        val sumMoneyOneMonth = getSumMoneyOneMonth(year, month, kind)
+        val sql =
+            "select typename,sImageId,sum(money)as total from accounttb where year=? and month=? and kind=? group by typename " +
+                    "order by total desc"
+        val cursor = db!!.rawQuery(
+            sql,
+            arrayOf(year.toString() + "", month.toString() + "", kind.toString() + "")
+        )
+        while (cursor.moveToNext()) {
+            val sImageId = cursor.getInt(cursor.getColumnIndex("sImageId"))
+            val typename = cursor.getString(cursor.getColumnIndex("typename"))
+            val total = cursor.getFloat(cursor.getColumnIndex("total"))
+            val ratio = div(total, sumMoneyOneMonth)
+            val bean = ChartItemBean(sImageId, typename, ratio, total)
+            list.add(bean)
+        }
+        return list
+    }
+    @SuppressLint("Range")
+    fun getMaxMoneyOneDayInMonth(year: Int, month: Int, kind: Int): Float {
+        val sql =
+            "select sum(money) from accounttb where year=? and month=? and kind=? group by day order by sum(money) desc"
+        val cursor = db!!.rawQuery(
+            sql,
+            arrayOf(year.toString() + "", month.toString() + "", kind.toString() + "")
+        )
+        return if (cursor.moveToFirst()) {
+            cursor.getFloat(cursor.getColumnIndex("sum(money)"))
+        } else 0f
+    }
+    @SuppressLint("Range")
+    fun getSumMoneyOneDayInMonth(year: Int, month: Int, kind: Int): List<BarChartItemBean>? {
+        val sql =
+            "select day,sum(money) from accounttb where year=? and month=? and kind=? group by day"
+        val cursor = db!!.rawQuery(
+            sql,
+            arrayOf(year.toString() + "", month.toString() + "", kind.toString() + "")
+        )
+        val list: MutableList<BarChartItemBean> = ArrayList()
+        while (cursor.moveToNext()) {
+            val day = cursor.getInt(cursor.getColumnIndex("day"))
+            val smoney = cursor.getFloat(cursor.getColumnIndex("sum(money)"))
+            val itemBean = BarChartItemBean(year, month, day, smoney)
+            list.add(itemBean)
         }
         return list
     }

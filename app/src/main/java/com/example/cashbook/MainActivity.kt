@@ -173,9 +173,9 @@ class MainActivity : AppCompatActivity() , OnClickListener{
             R.id.item_mainlv_top_iv_hide ->toggleShow()
         }
         if (v === headerView) {
-            //val intent = Intent()
-            //intent.setClass(this, MonthChartActivity::class.java)
-           // startActivity(intent)
+            val intent = Intent()
+            intent.setClass(this, MonthChartActivity::class.java)
+            startActivity(intent)
         }
     }
     var isShow :Boolean= true
