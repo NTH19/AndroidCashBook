@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() , OnClickListener{
             .setNegativeButton("取消", null)
             .setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
                 val click_id = clickBean.id
-                //执行删除的操作
                 DBManager.deleteItemFromAccounttbById(click_id)
                 mDatas.remove(clickBean)
                 adapter!!.notifyDataSetChanged()
@@ -106,7 +105,7 @@ class MainActivity : AppCompatActivity() , OnClickListener{
         topInTv!!.text = "￥$incomeOneMonth"
         topOutTv!!.text = "￥$outcomeOneMonth"
 
-        val bmoney = preferences.getFloat("bmoney", 0F) //预算
+        val bmoney = preferences.getFloat("bmoney", 0F)
         if (bmoney == 0f) {
             topbudgetTv.text = "￥ 0"
         } else {
@@ -117,10 +116,8 @@ class MainActivity : AppCompatActivity() , OnClickListener{
 
 
     private fun addLVHeaderView() {
-        //将布局转换成View对象
         headerView = layoutInflater.inflate(R.layout.item_mainlv_top, null)
         todayLv.addHeaderView(headerView)
-        //查找头布局可用控件
         topOutTv = headerView.findViewById(R.id.item_mainlv_top_tv_out)
         topInTv = headerView.findViewById(R.id.item_mainlv_top_tv_in)
         topbudgetTv = headerView.findViewById(R.id.item_mainlv_top_tv_buget)

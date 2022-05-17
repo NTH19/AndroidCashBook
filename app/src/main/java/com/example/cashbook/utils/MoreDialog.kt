@@ -9,10 +9,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import com.example.cashbook.AboutActivity
-import com.example.cashbook.HistoryActivity
-import com.example.cashbook.R
-import com.example.cashbook.SettingActivity
+import com.example.cashbook.*
 
 
 class MoreDialog(context: Context) : Dialog(context),
@@ -53,7 +50,8 @@ class MoreDialog(context: Context) : Dialog(context),
                 context.startActivity(intent);
             }
             R.id.dialog_more_btn_info -> {
-
+                intent.setClass(context, MonthChartActivity::class.java)
+                context.startActivity(intent)
             }
             R.id.dialog_more_iv -> {
             }
